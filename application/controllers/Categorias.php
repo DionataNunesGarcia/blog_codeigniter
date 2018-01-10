@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Categorias extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -11,18 +11,19 @@ class Home extends CI_Controller {
         $this->categorias = $this->modelcategorias->listar_categorias();
     }
 
-    public function index() {
+    public function index($id, $slug = null) {
         
         $dados['categorias'] = $this->categorias;
         $this->load->model('publicacoes_model', 'modelpublicacoes');
-        $dados['postagens'] = $this->modelpublicacoes->destaques_home();
+        $dados['postagens'] = $this->modelpublicacoes->categoria_pub($id);
                 
         //Dados para serem apresentados no cabeçalho
-        $dados['titulo'] = 'Página Inicial';
-        $dados['subtitulo'] = 'Postagens Recentes';
+        $dados['titulo'] = $dados['postagens'][0]->titulo_categoria;
+        $dados['subtitulo'] = 'Postagens Sobre - ' . $dados['postagens'][0]->titulo_categoria;
+        
         $this->load->view('frontend/template/html-header', $dados);
         $this->load->view('frontend/template/header');
-        $this->load->view('frontend/home');
+        $this->load->view('frontend/categoria');
         $this->load->view('frontend/template/aside');
         $this->load->view('frontend/template/footer');
         $this->load->view('frontend/template/html-footer');

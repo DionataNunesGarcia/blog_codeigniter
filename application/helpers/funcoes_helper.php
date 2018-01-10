@@ -39,6 +39,11 @@ function href($controller, $array = array()) {
             $pathname .= '/' . $i;
         }
     }
+    
+    if (empty($controller) && empty($array) ) {
+        return base_url();
+    }
+    
     return base_url($controller . $pathname);
 }
 
