@@ -30,7 +30,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Sobre Nós</a>
+                    <a href="<?= href('sobrenos') ?>">Sobre Nós</a>
                 </li>
                 <li>
                     <a href="#">Contato</a>

@@ -35,7 +35,7 @@ class Publicacoes_model extends CI_Model {
             ->select('usuario.id as usuario_id, '
                 . 'usuario.nome as nome_usuario, '
                 . 'postagens.id,'
-                . ' postagens.titulo, '
+                . 'postagens.titulo, '
                 . 'postagens.subtitulo, '
                 . 'postagens.data, '
                 . 'postagens.user, '
@@ -53,7 +53,7 @@ class Publicacoes_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    public function publicacao($id) {
+    public function buscar($id) {
         //Join com tabela usuário
         $this->db
             ->select('usuario.id as usuario_id, '
@@ -74,7 +74,7 @@ class Publicacoes_model extends CI_Model {
         
         $this->db->where("postagens.id = $id");
 
-        return $this->db->get()->result();
+        return $this->db->get()->first_row();
     }
 
 }

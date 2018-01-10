@@ -15,11 +15,11 @@ class Postagens extends CI_Controller {
         
         $dados['categorias'] = $this->categorias;
         $this->load->model('publicacoes_model', 'modelpublicacoes');
-        $dados['postagens'] = $this->modelpublicacoes->publicacao($id);
+        $dados['postagem'] = $this->modelpublicacoes->buscar($id);
                 
         //Dados para serem apresentados no cabeçalho
-        $dados['titulo'] = $dados['postagens'][0]->titulo;
-        $dados['subtitulo'] = 'Postagens Sobre - ' . $dados['postagens'][0]->titulo;
+        $dados['titulo'] = $dados['postagem']->titulo;
+        $dados['subtitulo'] = 'Postagens Sobre - ' . $dados['postagem']->titulo;
         
         $this->load->view('frontend/template/html-header', $dados);
         $this->load->view('frontend/template/header');

@@ -16,11 +16,15 @@ class Usuarios_model extends CI_Model {
         parent::__construct();
     }
     
-    public function listar_autor($id) {
-        $this->db->select('id, nome, historico, img');
+    public function buscar($id) {
         $this->db->from('usuario');
         $this->db->where('id = ' . $id);
+        return $this->db->get()->first_row();
+    }
+    
+    public function listar() {
         
-        return $this->db->get()->result();
+        $this->db->order_by('nome', 'ASC');
+        return $this->db->get('usuario')->result();
     }
 }

@@ -11,19 +11,21 @@ class Sobrenos extends CI_Controller {
         $this->categorias = $this->modelcategorias->listar_categorias();
     }
 
-    public function index($id, $slug = null) {
-        
+    public function index() {
         $dados['categorias'] = $this->categorias;
-        $this->load->model('publicacoes_model', 'modelpublicacoes');
-        $dados['postagens'] = $this->modelpublicacoes->categoria_pub($id);
-                
-        //Dados para serem apresentados no cabeçalho
-        $dados['titulo'] = $dados['postagens'][0]->titulo_categoria;
-        $dados['subtitulo'] = 'Postagens Sobre - ' . $dados['postagens'][0]->titulo_categoria;
+        $this->load->model('sobrenos_model', 'modelSobre');
+        $this->load->model('usuarios_model', 'modelUsuarios');
         
+        $dados['sobre'] = $this->modelSobre->buscar();
+        $dados['usuarios'] = $this->modelUsuarios->listar();
+        
+        //Dados para serem apresentados no cabeçalho
+        $dados['titulo'] = 'Sobre Nós';
+        $dados['subtitulo'] = $dados['sobre']->nome;
+                        
         $this->load->view('frontend/template/html-header', $dados);
         $this->load->view('frontend/template/header');
-        $this->load->view('frontend/categoria');
+        $this->load->view('frontend/sobrenos');
         $this->load->view('frontend/template/aside');
         $this->load->view('frontend/template/footer');
         $this->load->view('frontend/template/html-footer');
@@ -33,8 +35,8 @@ class Sobrenos extends CI_Controller {
     public function autor($id, $slug = null) {
     
         $dados['categorias'] = $this->categorias;
-        $this->load->model('usuarios_model', 'modelusuarios');
-        $dados['autores'] = $this->modelusuarios->listar_autor($id);
+        $this->load->model('usuarios_model', 'modelUsuarios');
+        $dados['autor'] = $this->modelUsuarios->buscar($id);
                 
         //Dados para serem apresentados no cabeçalho
         $dados['titulo'] = 'Sobre Nós';
