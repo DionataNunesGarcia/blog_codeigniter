@@ -16,16 +16,16 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Categorias</a>
+                        <a href="<?= href('admin/categoria') ?>"><i class="fa fa-sitemap fa-fw"></i> Categorias</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-edit fa-fw"></i> Postagens</a>
+                        <a href="<?= href('admin/postagens') ?>"><i class="fa fa-edit fa-fw"></i> Postagens</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Usuários</a>
+                        <a href="<?= href('admin/usuarios') ?>"><i class="fa fa-wrench fa-fw"></i> Usuários</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sign-out fa-fw"></i> Sair do Sistema</a>
+                        <a href="<?= href('admin/sair') ?>"><i class="fa fa-sign-out fa-fw"></i> Sair do Sistema</a>
                     </li>
                 </ul>
             </div>
