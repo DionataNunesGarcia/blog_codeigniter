@@ -7,39 +7,10 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?= 'Adicionar Nova ' . $titulo ?>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <?php
-                            echo validation_errors('<div class="alert alert-danger">', '</div>');
-                            echo form_open('admin/categoria/inserir');
-                            ?>
-                            <div class="form-group">
-                                <label>Nome</label>
-                                <input id='txt-categoria' name='txt-categoria' type='text' class="form-control" placeholder="Digíte o nome da Categoria">
-                            </div>
-                            <button type="submit" class="btn btn-default">Cadastrar</button>
-                            <button type="reset" class="btn btn-default">Limpar</button>
-                            <?php
-                            echo form_close();
-                            ?>
-                        </div>
-                    </div>
-                    <!-- /.row (nested) -->
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <?= 'Editar ' . $titulo . ' existente' ?>
+                    <?= 'Pesqusar ' . $titulo ?> <?= anchor(base_url('admin/categoria/incluir'), '<i class="fa fa-plus-circle"></i> Novo', ['class' => 'btn btn-default']); ?> 
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -47,9 +18,9 @@
                             <?php
                             $this->table->set_heading("Nome Categoria", "Alterar", "Excluir");
                             foreach ($categorias AS $categoria) {
-
-                                $alterar = anchor(base_url('admin/categoria'), '<i class="fa fa-edit fa-fw"></i> Editar');
-                                $excluir = anchor(base_url('admin/categoria'), '<i class="fa fa-trash fa-fw"></i> Excluir');
+                            
+                                $alterar = anchor(base_url('admin/categoria/alterar/'. md5($categoria->id)), '<i class="fa fa-edit fa-fw"></i> Editar', ['class' => 'btn btn-primary btn-xs']);
+                                $excluir = anchor(base_url('admin/categoria/excluir/'. md5($categoria->id)), '<i class="fa fa-trash fa-fw"></i> Excluir', ['class' => 'btn btn-danger btn-xs']);
 
                                 $this->table->add_row($categoria->titulo, $alterar, $excluir);
                             }

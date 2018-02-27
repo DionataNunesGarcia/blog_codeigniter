@@ -24,20 +24,57 @@ class Categoria extends CI_Controller {
         $this->load->view('backend/template/html-footer');
     }
 
-    public function inserir() {
+    public function incluir() {
+        $this->load->library('table');
+        $dados['categoria'] = $this->modelcategorias->novo();
+
+        //Dados para serem apresentados no cabeçalho
+        $dados['titulo'] = 'Categorias';
+        $dados['subtitulo'] = 'Administrar';
+
+        $this->load->view('backend/template/html-header', $dados);
+        $this->load->view('backend/template/template');
+        $this->load->view('backend/categoria-abrir');
+        $this->load->view('backend/template/html-footer');
+        
+    }
+
+    public function excluir($id) {
+        if($this->modelcategorias->excluir($id)){
+            redirect(base_url('admin/categoria'));
+        }else{
+            echo 'Houve um erro no sistema.';
+        }
+    }
+
+    public function alterar($id) {
+        $this->load->library('table');
+        $dados['categoria'] = $this->modelcategorias->buscar($id);
+
+        //Dados para serem apresentados no cabeçalho
+        $dados['titulo'] = 'Categorias';
+        $dados['subtitulo'] = 'Administrar';
+
+        $this->load->view('backend/template/html-header', $dados);
+        $this->load->view('backend/template/template');
+        $this->load->view('backend/categoria-abrir');
+        $this->load->view('backend/template/html-footer');
+    }
+
+    public function salvar_alteracoes() {
 
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules(
-                'txt-categoria', 'Nome da Categoria', 'required|min_length[3]|is_unique[categoria.titulo]'
+            'titulo', 'Nome da Categoria', 'required|min_length[3]'
         );
         
         if($this->form_validation->run() == false){
             $this->index();
         }else{
-            $titulo = $this->input->post('txt-categoria');
+            $dados = $this->input->post();
             
-            if($this->modelcategorias->adicionar($titulo)){
+            if($this->modelcategorias->salvar($dados)){
                 redirect(base_url('admin/categoria'));
             }else{
                 echo 'Houve um erro no sistema.';
@@ -46,5 +83,4 @@ class Categoria extends CI_Controller {
         }
         
     }
-
 }
