@@ -7,12 +7,14 @@ class Categoria extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('categorias_model', 'modelcategorias');
-        $this->categorias = $this->modelcategorias->listar_categorias();
+        $this->categorias = $this->modelcategorias->listar_categorias();       
+        
+        $this->logado->verificaLogin();
     }
 
     public function index() {
         $this->load->library('table');
-        $dados['categorias'] = $this->categorias;
+        $dados['entidades'] = $this->categorias;
 
         //Dados para serem apresentados no cabeçalho
         $dados['titulo'] = 'Categorias';
@@ -26,7 +28,7 @@ class Categoria extends CI_Controller {
 
     public function incluir() {
         $this->load->library('table');
-        $dados['categoria'] = $this->modelcategorias->novo();
+        $dados['entidade'] = $this->modelcategorias->novo();
 
         //Dados para serem apresentados no cabeçalho
         $dados['titulo'] = 'Categorias';
@@ -41,6 +43,7 @@ class Categoria extends CI_Controller {
 
     public function excluir($id) {
         if($this->modelcategorias->excluir($id)){
+            $this->session->set_flashdata('alert', ['mensagem' => 'O item foi excluído com sucesso.','class' => 'success']);
             redirect(base_url('admin/categoria'));
         }else{
             echo 'Houve um erro no sistema.';
@@ -49,7 +52,7 @@ class Categoria extends CI_Controller {
 
     public function alterar($id) {
         $this->load->library('table');
-        $dados['categoria'] = $this->modelcategorias->buscar($id);
+        $dados['entidade'] = $this->modelcategorias->buscar($id);
 
         //Dados para serem apresentados no cabeçalho
         $dados['titulo'] = 'Categorias';
@@ -75,11 +78,12 @@ class Categoria extends CI_Controller {
             $dados = $this->input->post();
             
             if($this->modelcategorias->salvar($dados)){
+                $this->session->set_flashdata('alert', ['mensagem' => 'Dados salvos com sucesso.','class' => 'success']);
                 redirect(base_url('admin/categoria'));
             }else{
-                echo 'Houve um erro no sistema.';
+                $this->session->set_flashdata('alert', ['mensagem' => 'Houve um erro no sistema.','class' => 'danger']);
+                redirect(base_url('admin/categoria'));
             }
-            
         }
         
     }

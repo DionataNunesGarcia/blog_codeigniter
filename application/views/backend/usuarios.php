@@ -10,25 +10,21 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?= 'Pesqusar ' . $titulo ?> <?= anchor(base_url('admin/categoria/incluir'), '<i class="fa fa-plus-circle"></i> Novo', ['class' => 'btn btn-default']); ?> 
+                    <?= 'Pesqusar ' . $titulo ?> <?= anchor(base_url('admin/usuarios/incluir'), '<i class="fa fa-plus-circle"></i> Novo', ['class' => 'btn btn-default']); ?> 
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <?php
-                            $this->table->set_heading("Nome Categoria", "Ações");
+                            $this->table->set_heading("Foto","Nome", "E-mail", "Usuário", "Ações");
                             foreach ($entidades AS $entidade) {
-                            
-                                $alterar = anchor(base_url('admin/categoria/alterar/'. md5($entidade->id)), '<i class="fa fa-edit fa-fw"></i> Editar', ['class' => 'btn btn-primary btn-xs']);
-                                $excluir = anchor(
-                                        base_url('admin/categoria/excluir/'. md5($entidade->id)), 
-                                        '<i class="fa fa-trash fa-fw"></i> Excluir', [
-                                            'class' => 'btn btn-danger btn-xs', 
-                                            'onclick' => "return confirm('Tem certeza que deseja excluir esse item?');"
-                                        ]);
+                                
+                                $alterar = anchor(base_url('admin/usuarios/alterar/'. md5($entidade->id)), '<i class="fa fa-edit fa-fw"></i> Editar', ['class' => 'btn btn-primary btn-xs']);
+                                $excluir = anchor(base_url('admin/usuarios/excluir/'. md5($entidade->id)), '<i class="fa fa-trash fa-fw"></i> Excluir', ['class' => 'btn btn-danger btn-xs','onclick' => "return confirm('Tem certeza que deseja excluir esse item?');"]);
 
-                                $this->table->add_row($entidade->titulo, "$alterar $excluir");
+                                $this->table->add_row("<img src='".$entidade->img."' class='img-responsive'/>",$entidade->nome, $entidade->email, $entidade->user, "$alterar $excluir");
                             }
+                            
                             $this->table->set_template(array(
                                 'table_open' => '<table class="table table-striped">'
                             ));

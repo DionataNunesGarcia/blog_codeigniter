@@ -56,3 +56,5 @@ $route['categoria/(:num)/(:any)'] = 'categorias/index/$1/$2';
 $route['postagem/(:num)/(:any)'] = 'postagens/index/$1/$2';
 $route['autor/(:num)/(:any)'] = 'sobrenos/autor/$1/$2';
 $route['sobrenos'] = 'sobrenos/index';
+$route['admin/login'] = 'admin/usuarios/pag_login';
+$route['admin/sair'] = 'admin/usuarios/logout';

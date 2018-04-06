@@ -19,12 +19,12 @@
                             echo validation_errors('<div class="alert alert-danger">', '</div>');
                             echo form_open('admin/categoria/salvar_alteracoes');
                             ?>
-                            <input id='id' value="<?php echo $categoria->id; ?>" name='id' type='hidden'>
+                            <input id='id' value="<?php echo $entidade->id; ?>" name='id' type='hidden'>
                             <div class="form-group">
                                 <label for="titulo">Nome</label>
-                                <input id='titulo' value="<?php echo $categoria->titulo; ?>" name='titulo' type='text' class="form-control" placeholder="Digíte o nome da Categoria">
+                                <input id='titulo' value="<?php echo $entidade->titulo; ?>" name='titulo' type='text' class="form-control" placeholder="Digíte o nome da Categoria">
                             </div>
-                            <button type="submit" class="btn btn-default">Salvar</button>
+                            <button type="submit" class="btn btn-default"><i class="fa fa-save"></i> Salvar</button>
                             <?= anchor(base_url('admin/categoria'), '<i class="fa fa-bars"></i> Listar', ['class' => 'btn btn-default']); ?> 
                             <?php
                             echo form_close();

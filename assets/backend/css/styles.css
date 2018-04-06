@@ -1,0 +1,28 @@
+/*
+*
+* Customizado
+*
+*/
+
+#page-wrapper-alert{
+    padding:0 15px;
+    background-color:#fff;
+}
+
+#page-wrapper-alert{
+    padding:0 15px;
+    background-color:#fff
+}
+
+@media (min-width:768px){
+    #page-wrapper-alert{
+        position:inherit;
+        margin:0 0 0 250px;
+        padding:10px 30px;
+        border-left:1px solid #e7e7e7
+    }
+}
+
+.page-header {
+    margin: 20px 0 20px !important;
+}

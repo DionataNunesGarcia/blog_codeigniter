@@ -33,3 +33,18 @@
         </div>
         <!-- /.navbar-static-side -->
     </nav>
+    <?php
+    if (!empty($this->session->flashdata('alert'))) {
+        $message = $this->session->flashdata('alert');
+        ?>
+        <div id="page-wrapper-alert">    
+            <div class="row">    
+                <div class="col-md-12">    
+                    <div class="alert alert-<?= $message['class'] ?> fade in">
+                        <button type="button" class="close btn btn-default" data-dismiss="alert" aria-hidden="true">×</button>
+                        <?php echo $message['mensagem']; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
