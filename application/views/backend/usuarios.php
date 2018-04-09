@@ -19,8 +19,8 @@
                             $this->table->set_heading("Foto","Nome", "E-mail", "Usuário", "Ações");
                             foreach ($entidades AS $entidade) {
                                 
-                                $alterar = anchor(base_url('admin/usuarios/alterar/'. md5($entidade->id)), '<i class="fa fa-edit fa-fw"></i> Editar', ['class' => 'btn btn-primary btn-xs']);
-                                $excluir = anchor(base_url('admin/usuarios/excluir/'. md5($entidade->id)), '<i class="fa fa-trash fa-fw"></i> Excluir', ['class' => 'btn btn-danger btn-xs','onclick' => "return confirm('Tem certeza que deseja excluir esse item?');"]);
+                                $alterar = anchor(base_url('admin/usuarios/alterar/'. md5($entidade->id)), '<i class="fa fa-edit fa-fw"></i>', ['class' => 'btn btn-primary btn-xs', 'title' => 'Editar']);
+                                $excluir = anchor(base_url('admin/usuarios/excluir/'. md5($entidade->id)), '<i class="fa fa-trash fa-fw"></i>', ['class' => 'btn btn-danger btn-xs', 'title' => 'Excluir', 'onclick' => "return confirm('Tem certeza que deseja excluir esse item?');"]);
 
                                 $this->table->add_row("<img src='".$entidade->img."' class='img-responsive'/>",$entidade->nome, $entidade->email, $entidade->user, "$alterar $excluir");
                             }

@@ -17,7 +17,7 @@
                         <div class="col-lg-12">
                             <?php
                             echo validation_errors('<div class="alert alert-danger">', '</div>');
-                            echo form_open('admin/categoria/salvar_alteracoes');
+                            echo form_open('admin/categoria/salvar');
                             ?>
                             <input id='id' value="<?php echo $entidade->id; ?>" name='id' type='hidden'>
                             <div class="form-group">

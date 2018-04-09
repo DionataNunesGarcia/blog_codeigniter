@@ -14,6 +14,7 @@ class Usuarios extends CI_Controller {
         $this->load->library('table');
         
         $this->logado->verificaLogin();
+        
         $dados['entidades'] = $this->usuarios;
         
         //Dados para serem apresentados no cabeçalho
@@ -28,6 +29,9 @@ class Usuarios extends CI_Controller {
     }
     
     public function incluir() {
+        
+        $this->logado->verificaLogin();
+        
         $this->load->library('table');
         $dados['entidade'] = $this->modelUsuarios->novo();
 
@@ -43,6 +47,9 @@ class Usuarios extends CI_Controller {
     }
 
     public function excluir($id) {
+        
+        $this->logado->verificaLogin();
+        
         if($this->modelUsuarios->excluir($id)){
             $this->session->set_flashdata('alert', ['mensagem' => 'O item foi excluído com sucesso.','class' => 'success']);
             redirect(base_url('admin/usuarios'));
@@ -54,38 +61,89 @@ class Usuarios extends CI_Controller {
 
     public function alterar($id) {
         $this->load->library('table');
+        
+        $this->logado->verificaLogin();
+        
         $dados['entidade'] = $this->modelUsuarios->buscar($id, true);
 
         //Dados para serem apresentados no cabeçalho
-        $dados['titulo'] = 'Categorias';
+        $dados['titulo'] = 'Usuários';
         $dados['subtitulo'] = 'Administrar';
-
+        
         $this->load->view('backend/template/html-header', $dados);
         $this->load->view('backend/template/template');
         $this->load->view('backend/usuario-abrir');
         $this->load->view('backend/template/html-footer');
     }
 
-    public function salvar_alteracoes() {
-
+    public function salvar() {
+        
+        $dados = $this->input->post();
+        
+        $configImg['upload_path'] = './assets/frontend/img/usuarios';
+        $configImg['allowed_types'] = 'jpg';
+        $configImg['file_name'] = limpar($dados['nome']).'.jpg';
+        $configImg['overwrite'] = true;
+        
+        $this->load->library('upload', $configImg);
+        
+//        if(!$this->upload->do_upload()){
+            
+//            $this->session->set_flashdata('alert', ['mensagem' => $this->upload->display_errors(),'class' => 'danger']);
+           
+//            if($dados['id'] !== ''){           
+//                redirect(base_url('admin/usuarios/alterar'.$dados['id']));
+//            }else{
+//                redirect(base_url('admin/usuarios/incluir'));
+//            }
+//        }
+        
+        $this->logado->verificaLogin();
+        
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules(
-            'titulo', 'Nome da Categoria', 'required|min_length[3]'
+            'nome', 'Nome', 'required|min_length[3]'
+        );        
+        $this->form_validation->set_rules(
+            'email', 'email', 'required|valid_email'
+        );        
+        $this->form_validation->set_rules(
+            'historico', 'Histórico', 'required|min_length[20]'
         );
+        $is_unique = '';
+        if($dados['id'] == ''){                
+            $is_unique = '|is_unique[usuario.user]';
+        }
+        $this->form_validation->set_rules(
+            'user', 'Usuário', 'required|min_length[3]'.$is_unique
+        );
+                
+        if($dados['senha'] !== '' || $dados['id'] == ''){     
+            $this->form_validation->set_rules(
+                'senha', 'Senha', 'required|min_length[3]'
+            );   
+            $this->form_validation->set_rules(
+                'confirmar-senha', 'Confirmar Senha', 'required|matches[senha]'
+            );          
+        }
         
         if($this->form_validation->run() == false){
-            $this->index();
+            
+            if($dados['id'] !== ''){                
+                $this->alterar($dados['id']);
+            }else{
+                $this->incluir();
+            }
         }else{
-            $dados = $this->input->post();
-            unset($dados['confirmar-senha']);
-           
-            if($this->modelUsuarios->salvar($dados)){
+            $retorno = $this->modelUsuarios->salvar($dados);
+            
+            if($retorno){
                 $this->session->set_flashdata('alert', ['mensagem' => 'Dados salvos com sucesso.','class' => 'success']);
-                redirect(base_url('admin/categoria'));
+                redirect(base_url('admin/usuarios'));
             }else{
                 $this->session->set_flashdata('alert', ['mensagem' => 'Houve um erro no sistema.','class' => 'danger']);
-                redirect(base_url('admin/categoria'));
+                redirect(base_url('admin/usuarios'));
             }
         }
         
@@ -117,7 +175,7 @@ class Usuarios extends CI_Controller {
             $dados = $this->input->post();
             
             $this->db->where('user', $dados['txt-user']);
-            $this->db->where('senha', $dados['txt-senha']);
+            $this->db->where('senha', md5($dados['txt-senha']));
             
             $logado = $this->db->get('usuario')->row();
             

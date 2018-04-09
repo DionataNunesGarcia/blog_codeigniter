@@ -16,8 +16,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <?php
+                            if(set_value('nome') !== ''){
+                                $entidadeErro = new stdClass();
+                                
+                                $entidadeErro->id = set_value('id');
+                                $entidadeErro->nome = set_value('nome');
+                                $entidadeErro->email = set_value('email');
+                                $entidadeErro->historico = set_value('historico');
+                                $entidadeErro->user = set_value('user');
+                                
+                                $entidade = $entidadeErro;                                
+                            }
+                            
                             echo validation_errors('<div class="alert alert-danger">', '</div>');
-                            echo form_open('admin/usuarios/salvar_alteracoes');
+                            echo form_open_multipart('admin/usuarios/salvar');
                             ?>
                             <input id='id' value="<?php echo $entidade->id; ?>" name='id' type='hidden'>
                             
@@ -32,15 +44,18 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="historico">Histórico</label>
-                                <textArea id='historico' name='historico' rows="5" class="form-control" placeholder="Digíte o histórico">
-                                    <?php echo $entidade->historico; ?>
-                                </textarea>
+                                <label for="img">Imagem</label>
+                                <?= form_upload(['name' => 'userfile', 'id' => 'userfile', 'class' => 'form-control']); ?>
                             </div>
                             
                             <div class="form-group">
-                                <label for="usuario">Usuário</label>
-                                <input id='usuario' value="<?php echo $entidade->user; ?>" name='usuario' type='text' class="form-control" placeholder="Digíte o usuário">
+                                <label for="historico">Histórico</label>
+                                <textArea id='historico' name='historico' rows="5" class="form-control" placeholder="Digíte o histórico"><?php echo $entidade->historico; ?></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="user">Usuário</label>
+                                <input id='user' value="<?php echo $entidade->user; ?>" name='user' type='text' class="form-control" placeholder="Digíte o usuário">
                             </div>
                             
                             <div class="form-group">

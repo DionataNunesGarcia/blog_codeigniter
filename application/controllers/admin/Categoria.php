@@ -64,7 +64,7 @@ class Categoria extends CI_Controller {
         $this->load->view('backend/template/html-footer');
     }
 
-    public function salvar_alteracoes() {
+    public function salvar() {
 
         $this->load->library('form_validation');
 

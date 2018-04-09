@@ -38,7 +38,19 @@ class Usuarios_model extends CI_Model {
     
     public function salvar($dados){
         
-        if($dados['id'] !== ''){            
+        unset($dados['confirmar-senha']);
+        
+        if($dados['id'] !== ''){
+            
+            $entidade = $this->buscar($dados['id']);
+            
+            
+            if($dados['senha'] == ''){                
+                $dados['senha'] = $entidade->senha;
+            }else{
+                $dados['senha'] = md5($dados['senha']);
+            }
+            
             $this->db->where('id', $dados['id']);
             return $this->db->update($this->table, $dados);            
         }else{   

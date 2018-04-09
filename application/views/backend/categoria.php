@@ -19,11 +19,12 @@
                             $this->table->set_heading("Nome Categoria", "Ações");
                             foreach ($entidades AS $entidade) {
                             
-                                $alterar = anchor(base_url('admin/categoria/alterar/'. md5($entidade->id)), '<i class="fa fa-edit fa-fw"></i> Editar', ['class' => 'btn btn-primary btn-xs']);
+                                $alterar = anchor(base_url('admin/categoria/alterar/'. md5($entidade->id)), '<i class="fa fa-edit fa-fw"></i>', ['class' => 'btn btn-primary btn-xs', 'title' => 'Editar']);
                                 $excluir = anchor(
                                         base_url('admin/categoria/excluir/'. md5($entidade->id)), 
-                                        '<i class="fa fa-trash fa-fw"></i> Excluir', [
+                                        '<i class="fa fa-trash fa-fw"></i>', [
                                             'class' => 'btn btn-danger btn-xs', 
+                                            'title' => 'Excluir', 
                                             'onclick' => "return confirm('Tem certeza que deseja excluir esse item?');"
                                         ]);
 
