@@ -87,16 +87,25 @@ class Usuarios extends CI_Controller {
         
         $this->load->library('upload', $configImg);
         
-//        if(!$this->upload->do_upload()){
+        if(!$this->upload->do_upload()){
             
-//            $this->session->set_flashdata('alert', ['mensagem' => $this->upload->display_errors(),'class' => 'danger']);
-           
-//            if($dados['id'] !== ''){           
-//                redirect(base_url('admin/usuarios/alterar'.$dados['id']));
-//            }else{
-//                redirect(base_url('admin/usuarios/incluir'));
-//            }
-//        }
+            $this->session->set_flashdata('alert', ['mensagem' => $this->upload->display_errors(),'class' => 'danger']);
+            
+            redirect(base_url('admin/usuarios'));
+        }else{
+            $configSource['source_image'] = $configImg['upload_path'] . $configImg['file_name'];
+            $configSource['create_thumb'] = false;
+            $configSource['width'] = 200;
+            $configSource['height'] = 200;
+            $this->load->library('image_lib', $configSource);
+            
+            if(!$this->image_lib->resize()){
+                $this->session->set_flashdata('alert', ['mensagem' => $this->upload->display_errors(),'class' => 'danger']);
+            
+                redirect(base_url('admin/usuarios'));
+            }
+            
+        }
         
         $this->logado->verificaLogin();
         
